@@ -21,7 +21,8 @@ def Low_frequency_resolve(coeffs, dlevel):
 
 def rm_1(Biter, x, y):
     """调整逆变换后的张量尺寸"""
-    Biter_new = torch.zeros((x, y), dtype=torch.uint8)
+    device = Biter.device
+    Biter_new = torch.zeros((x, y), dtype=torch.uint8, device=device)
     if x % 2 and y % 2 == 0:
         Biter_new[:, :] = Biter[:x, :]
     elif x % 2 == 0 and y % 2:
