@@ -17,10 +17,10 @@ def forward_diff(data, step, dim):
 
     assert dim <= 2
     r, n, m = data.shape
-    size = torch.tensor((r, n, m), device=device)
-    position = torch.zeros(3, dtype=torch.float32, device=device)
-    temp1 = torch.zeros(size + 1, dtype=torch.float32, device=device)
-    temp2 = torch.zeros(size + 1, dtype=torch.float32, device=device)
+    size = [r, n, m]
+    position = [0, 0, 0]
+    temp1 = torch.zeros([x + 1 for x in size], dtype=torch.float32, device=device)
+    temp2 = torch.zeros([x + 1 for x in size], dtype=torch.float32, device=device)
 
     size[dim] += 1
     position[dim] += 1
@@ -46,10 +46,10 @@ def back_diff(data, step, dim):
     # dim = 2 --> x axis
     assert dim <= 2
     r, n, m = data.shape
-    size = torch.tensor((r, n, m), device=device)
-    position = torch.zeros(3, dtype=torch.float32, device=device)
-    temp1 = torch.zeros(size + 1, dtype=torch.float32, device=device)
-    temp2 = torch.zeros(size + 1, dtype=torch.float32, device=device)
+    size = [r, n, m]
+    position = [0, 0, 0]
+    temp1 = torch.zeros([x + 1 for x in size], dtype=torch.float32, device=device)
+    temp2 = torch.zeros([x + 1 for x in size], dtype=torch.float32, device=device)
 
     temp1[position[0] : size[0], position[1] : size[1], position[2] : size[2]] = data
     temp2[position[0] : size[0], position[1] : size[1], position[2] : size[2]] = data
@@ -72,9 +72,9 @@ def shrink(x, L):  # shrink函数
 
 def iter_xx(g, bxx, para, mu):  # v和u还有L迭代 xx方向
     gxx = back_diff(forward_diff(g, 1, 1), 1, 1)
-    dxx = shrink(gxx + bxx, mu) # u
+    dxx = shrink(gxx + bxx, mu)  # u
     bxx = bxx + (gxx - dxx)
-    Lxx = para * back_diff(forward_diff(dxx - bxx, 1, 1), 1, 1) #L
+    Lxx = para * back_diff(forward_diff(dxx - bxx, 1, 1), 1, 1)  # L
     return Lxx, bxx
 
 

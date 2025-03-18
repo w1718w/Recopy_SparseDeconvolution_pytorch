@@ -51,7 +51,7 @@ def background_estimation(imgs, th=1, dlevel=7, wavename="db6", iter=3):
         AssertionError: 当输入维度不符合要求时抛出
     """
     assert imgs.dim() in [2, 3], "输入维度需为2D(H,W)或3D(T,H,W)"
-    device = imgs.device  # 设备和img一致
+    # device = imgs.device  # 设备和img一致
     if imgs.dim() == 3:
         t, x, y = imgs.shape
         Background = torch.zeros_like(imgs)
@@ -102,6 +102,7 @@ def background_estimation(imgs, th=1, dlevel=7, wavename="db6", iter=3):
                 )
                 vec = Low_frequency_resolve(coeffs1, dlevel)
                 Biter = ptwt.waverec2(vec, wavelet=wavename)
+                Biter = Biter.squeeze(0)
                 Biter_new = rm_1(Biter, x, y)
             Background = Biter_new
 
