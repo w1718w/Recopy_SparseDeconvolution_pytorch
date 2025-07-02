@@ -1,0 +1,55 @@
+[project]
+authors = [{name = "ao WANG", email = "w1718w@hotmail.com"}]
+dependencies = []
+name = "sparse-pytorch"
+requires-python = ">= 3.13"
+version = "0.1.0"
+
+
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[tool.pixi.pypi-dependencies]
+sparse_pytorch = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+
+[tool.pixi.dependencies]
+python = "3.13.*"
+
+
+[tool.pixi.feature.cpu.dependencies]
+pytorch-cpu = "*"
+
+[tool.pixi.feature.gpu.system-requirements]
+cuda = "12.8"
+
+[tool.pixi.feature.gpu.dependencies]
+cuda-version = "12.8.*"
+pytorch-gpu = "*"
+
+[tool.pixi.feature.dev.dependencies]
+numpy = ">=2.3.1,<3"
+scipy = ">=1.16.0,<2"
+scikit-image = ">=0.25.2,<0.26"
+matplotlib = ">=3.10.3,<4"
+jupyter = ">=1.1.1,<2"
+scipy-stubs = ">=1.16.0.2,<2"
+scienceplots = ">=2.1.1,<3"
+
+[tool.pixi.feature.dev.pypi-dependencies]
+pic_little_tool = {path = "C:\\Programme\\Code\\pic_little_tool",editable = true}
+
+[tool.pixi.environments]
+cpu = { features = ["cpu"]}
+default = { features = ["gpu"], solve-group = "default_group" }
+gpu-dev = { features = ["dev","gpu"], solve-group = "default_group" }
+
+[dependency-groups]
+dev = ["mplfonts>=0.0.10,<0.0.11"]
