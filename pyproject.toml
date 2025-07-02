@@ -1,9 +1,9 @@
 [project]
 authors = [{name = "ao WANG", email = "w1718w@hotmail.com"}]
-dependencies = []
 name = "sparse-pytorch"
 requires-python = ">= 3.13"
 version = "0.1.0"
+dependencies = ["ptwt>=0.1.9,<0.2"]
 
 
 
@@ -42,9 +42,9 @@ matplotlib = ">=3.10.3,<4"
 jupyter = ">=1.1.1,<2"
 scipy-stubs = ">=1.16.0.2,<2"
 scienceplots = ">=2.1.1,<3"
+mypy = ">=1.16.1,<2"
+pandas = ">=2.3.0,<3"
 
-[tool.pixi.feature.dev.pypi-dependencies]
-pic_little_tool = {path = "C:\\Programme\\Code\\pic_little_tool",editable = true}
 
 [tool.pixi.environments]
 cpu = { features = ["cpu"]}
@@ -52,4 +52,4 @@ default = { features = ["gpu"], solve-group = "default_group" }
 gpu-dev = { features = ["dev","gpu"], solve-group = "default_group" }
 
 [dependency-groups]
-dev = ["mplfonts>=0.0.10,<0.0.11"]
+dev = ["mplfonts>=0.0.10,<0.0.11", "pic-little-tool @ file:///C://Programme//Code//pic_little_tool"]
